@@ -46,6 +46,10 @@ on:
     paths:
       - '**/*.sql'
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   review:
     runs-on: ubuntu-latest
