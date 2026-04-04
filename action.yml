@@ -1,0 +1,61 @@
+name: 'SQL Ops Reviewer'
+description: 'AI-powered SQL review for pull requests. Catches performance anti-patterns, security risks, and optimization opportunities using Ollama.'
+author: 'Pawansingh3889'
+
+branding:
+  icon: 'database'
+  color: 'blue'
+
+inputs:
+  github-token:
+    description: 'GitHub token for posting review comments'
+    required: true
+    default: ${{ github.token }}
+  model:
+    description: 'Ollama model to use for SQL analysis'
+    required: false
+    default: 'phi3:mini'
+  severity:
+    description: 'Minimum severity to report (info, warning, error)'
+    required: false
+    default: 'warning'
+  file-pattern:
+    description: 'Glob pattern for SQL files to review'
+    required: false
+    default: '**/*.sql'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Ollama
+      shell: bash
+      run: curl -fsSL https://ollama.com/install.sh | sh
+
+    - name: Start Ollama and pull model
+      shell: bash
+      run: |
+        ollama serve &
+        sleep 5
+        ollama pull ${{ inputs.model }}
+
+    - name: Install dependencies
+      shell: bash
+      run: pip install requests ollama
+
+    - name: Run SQL review
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        OLLAMA_MODEL: ${{ inputs.model }}
+        MIN_SEVERITY: ${{ inputs.severity }}
+        FILE_PATTERN: ${{ inputs.file-pattern }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        REPO: ${{ github.repository }}
+        HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      run: python ${{ github.action_path }}/reviewer/main.py
