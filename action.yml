@@ -58,4 +58,6 @@ runs:
         REPO: ${{ github.repository }}
         HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         BASE_SHA: ${{ github.event.pull_request.base.sha }}
-      run: python ${{ github.action_path }}/reviewer/main.py
+        PYTHONPATH: ${{ github.action_path }}
+      run: python -m reviewer.main
+      working-directory: ${{ github.action_path }}
