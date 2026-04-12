@@ -6,3 +6,9 @@ build/
 *.egg-info
 .env
 venv/
+
+# AI tools
+.claude/
+.cursorrules
+.continue/
+.aider*
