@@ -1,6 +1,4 @@
 """Extract changed SQL files from a pull request."""
-import fnmatch
-import os
 import requests
 
 
@@ -55,7 +53,7 @@ def get_changed_sql_files(repo, pr_number, token, file_pattern="**/*.sql"):
                 line_number += 1
 
         if added_lines:
-            full_sql = "\n".join(l["content"] for l in added_lines)
+            full_sql = "\n".join(line["content"] for line in added_lines)
             sql_files.append({
                 "filename": filename,
                 "sql": full_sql,

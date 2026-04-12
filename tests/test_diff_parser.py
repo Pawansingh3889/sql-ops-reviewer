@@ -1,5 +1,6 @@
 """Tests for diff_parser module."""
 import unittest
+
 from reviewer.diff_parser import get_changed_sql_files
 
 
@@ -8,7 +9,7 @@ class TestDiffParser(unittest.TestCase):
 
     def test_import(self):
         """Verify the module imports correctly."""
-        from reviewer.diff_parser import get_changed_sql_files, get_full_file_content
+        from reviewer.diff_parser import get_full_file_content
         self.assertIsNotNone(get_changed_sql_files)
         self.assertIsNotNone(get_full_file_content)
 
@@ -48,7 +49,7 @@ class TestGitHubClient(unittest.TestCase):
     """Test GitHub client module."""
 
     def test_import(self):
-        from reviewer.github_client import post_review, post_comment
+        from reviewer.github_client import post_comment, post_review
         self.assertIsNotNone(post_review)
         self.assertIsNotNone(post_comment)
 

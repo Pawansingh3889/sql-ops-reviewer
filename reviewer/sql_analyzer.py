@@ -1,7 +1,9 @@
 """Analyze SQL using Ollama and return structured findings."""
 import json
 import os
+
 import ollama
+
 from reviewer.prompts import SYSTEM_PROMPT
 
 

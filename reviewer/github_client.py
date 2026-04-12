@@ -1,8 +1,7 @@
 """Post review comments on GitHub pull requests."""
-import os
 import requests
-from reviewer.prompts import REVIEW_HEADER, FINDING_TEMPLATE
 
+from reviewer.prompts import FINDING_TEMPLATE, REVIEW_HEADER
 
 SEVERITY_ICONS = {
     "error": ":x:",

@@ -3,8 +3,8 @@ import os
 import sys
 
 from reviewer.diff_parser import get_changed_sql_files
+from reviewer.github_client import post_comment, post_review
 from reviewer.sql_analyzer import analyze_sql, filter_by_severity
-from reviewer.github_client import post_review, post_comment
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
         print("ERROR: Missing required environment variables (GITHUB_TOKEN, REPO, PR_NUMBER)")
         sys.exit(1)
 
-    print(f"SQL Ops Reviewer")
+    print("SQL Ops Reviewer")
     print(f"  Repo: {repo}")
     print(f"  PR: #{pr_number}")
     print(f"  Model: {model}")
